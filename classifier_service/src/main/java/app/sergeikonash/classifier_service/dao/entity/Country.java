@@ -20,7 +20,6 @@ public class Country implements Serializable {
     private UUID uuid;
 
     @Column(name = "date_create")
-
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime dtCreate;

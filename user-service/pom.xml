@@ -4,12 +4,11 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>app.sergeikonash.event</groupId>
-  <artifactId>events_service</artifactId>
+  <groupId>app.sergeikonash.user_service</groupId>
+  <artifactId>user-service</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <url>app.sergeikonash.events_service</url>
-
-  <name>events_service Maven Webapp</name>
+  <name>user-service Maven Webapp</name>
+  <url>app.sergeikonash.user_service</url>
 
   <properties>
     <maven.compiler.source>11</maven.compiler.source>
@@ -25,7 +24,6 @@
     <version>2.7.1</version>
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
-
 
   <dependencies>
     <dependency>

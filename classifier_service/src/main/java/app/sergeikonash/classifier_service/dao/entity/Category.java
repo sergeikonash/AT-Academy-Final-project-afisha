@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name = "country", schema = "classifier")
+@Table(name = "category", schema = "classifier")
 public class Category implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -38,7 +38,10 @@ public class Category implements Serializable {
 
     }
 
-    public Category(UUID uuid, LocalDateTime dtCreate, LocalDateTime dtUpdate, String title) {
+    public Category(UUID uuid,
+                    LocalDateTime dtCreate,
+                    LocalDateTime dtUpdate,
+                    String title) {
         this.uuid = uuid;
         this.dtCreate = dtCreate;
         this.dtUpdate = dtUpdate;
