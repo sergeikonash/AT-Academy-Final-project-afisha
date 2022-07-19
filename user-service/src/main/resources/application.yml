@@ -11,7 +11,7 @@ spring:
   datasource:
     username: postgres
     password: postgres
-    url: jdbc:postgresql://localhost:5432/users?currentSchema=user
+    url: jdbc:postgresql://localhost:5432/afisha?afishaSchema=afisha_schema
     driver-class-name: org.postgresql.Driver
 server:
   port: 82

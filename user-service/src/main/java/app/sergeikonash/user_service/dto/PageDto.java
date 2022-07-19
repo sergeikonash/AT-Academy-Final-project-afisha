@@ -1,7 +1,5 @@
 package app.sergeikonash.user_service.dto;
 
-import app.sergeikonash.user_service.dao.entity.User;
-
 import java.util.List;
 
 public class PageDto<T> {

@@ -1,10 +1,7 @@
 package app.sergeikonash.events_service.controller;
 
-import app.sergeikonash.events_service.dao.entity.Concert;
-import app.sergeikonash.events_service.dto.ConcertDto;
-import app.sergeikonash.events_service.dto.enums.Type;
-import app.sergeikonash.events_service.service.ConcertService;
-import org.springframework.beans.factory.annotation.Autowired;
+import app.sergeikonash.events_service.dto.*;
+import app.sergeikonash.events_service.service.api.IConcertService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,50 +10,39 @@ import java.util.TimeZone;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/v1/afisha/event")
+@RequestMapping("/api/v1/afisha/concert")
 public class ConcertController {
 
     {
         TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
     }
 
-    private final ConcertService concertService;
+    private final IConcertService concertService;
 
-    @Autowired
-    public ConcertController(ConcertService concertService) {
+    public ConcertController(IConcertService concertService) {
         this.concertService = concertService;
     }
 
-    @PostMapping(value = "/{type}")
-    public ResponseEntity<Concert> createEvent(@RequestBody ConcertDto dto, @PathVariable Type type){
-        if (!type.equals(dto.getType())) {
-            throw new IllegalArgumentException("Неверный тип");
-        }
-        return new ResponseEntity<>(this.concertService.createEvent(dto), HttpStatus.CREATED);
+    @PostMapping
+    public ResponseEntity<ConcertCreateDto> createEvent(@RequestBody ConcertCreateDto concertCreateDto){
+        return ResponseEntity.status(HttpStatus.CREATED).body(concertService.createEvent(concertCreateDto));
     }
 
-    @GetMapping(value = "/{type}/{uuid}")
-    public Concert getEventByUuid(@RequestParam Type type, @RequestParam UUID uuid) {
-        return this.concertService.findByUuid(uuid);
+    @GetMapping(value = "/{uuid}")
+    public ResponseEntity<ConcertReadDto> getEventByUuid(@PathVariable UUID uuid) {
+        return ResponseEntity.ok(concertService.findByUuid(uuid));
     }
 
-    @PutMapping("/{type}/{uuid}/dt_update/{dt_update}")
-    public Concert editEvent(@RequestBody ConcertDto dto,
-                             @PathVariable Type type,
-                             @PathVariable UUID uuid,
-                             @PathVariable ("dt_update")Long dtUpdate){
-        return null;
+    @PutMapping("/{uuid}/dt_update/{dt_update}")
+    public ResponseEntity<ConcertCreateDto> editEvent(@RequestBody ConcertCreateDto concertCreateDto,
+                                                   @PathVariable UUID uuid,
+                                                   @PathVariable ("dt_update")Long dtUpdate){
+        return ResponseEntity.ok(concertService.editByUuid(concertCreateDto, uuid, dtUpdate));
     }
 
-    @GetMapping("/{type}")
-    public ResponseEntity<Object> getPageOfEvents(@PathVariable Type type,
-                                                   @RequestParam(value = "page", defaultValue = "0") Integer page,
+    @GetMapping
+    public ResponseEntity<PageDto> getPageOfEvents(@RequestParam(value = "page", defaultValue = "1") Integer page,
                                                    @RequestParam(value = "size", defaultValue = "20") Integer size) {
-//        PageRequest pageRequest = PageRequest.of(page, size, Sort.by("uuid"));
-//
-//        ResponseEntity<Object> responseEntity;
-//
-//        Page<Concert> pageConcert = concertService.getPageOfEvents(pageRequest);
-        return null;
+        return ResponseEntity.ok(concertService.getAll(page, size));
     }
 }

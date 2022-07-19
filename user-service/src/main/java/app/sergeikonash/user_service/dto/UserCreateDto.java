@@ -7,7 +7,6 @@ import java.util.UUID;
 
 public class UserCreateDto {
 
-    private UUID uuid;
     private String mail;
     private String nick;
     private Role role;
@@ -17,26 +16,16 @@ public class UserCreateDto {
     public UserCreateDto() {
     }
 
-    public UserCreateDto(UUID uuid,
-                         String mail,
+    public UserCreateDto(String mail,
                          String nick,
                          Role role,
                          Status status,
                          String password) {
-        this.uuid = uuid;
         this.mail = mail;
         this.nick = nick;
         this.role = role;
         this.status = status;
         this.password = password;
-    }
-
-    public UUID getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(UUID uuid) {
-        this.uuid = uuid;
     }
 
     public String getMail() {

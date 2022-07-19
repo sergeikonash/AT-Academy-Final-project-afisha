@@ -4,31 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="623bfcfc-deb5-48a0-89fa-5939a0338613" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/app/sergeikonash/user_service/UserApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/app/sergeikonash/user_service/configs/DtoToEntityMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/app/sergeikonash/user_service/configs/ObjMapperConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/app/sergeikonash/user_service/controllers/UserController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/app/sergeikonash/user_service/controllers/advices/GlobalHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/app/sergeikonash/user_service/controllers/json/LocalDateTimeDeserializer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/app/sergeikonash/user_service/controllers/json/LocalDateTimeSerializer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/app/sergeikonash/user_service/dao/api/IUserDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/app/sergeikonash/user_service/dao/entity/User.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/app/sergeikonash/user_service/dto/PageDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/app/sergeikonash/user_service/dto/UserCreateDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/app/sergeikonash/user_service/dto/UserReadDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/app/sergeikonash/user_service/dto/enums/Role.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/app/sergeikonash/user_service/dto/enums/Status.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/app/sergeikonash/user_service/dto/page_converter/PageToMyPageConverter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/app/sergeikonash/user_service/service/UserService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/app/sergeikonash/user_service/service/api/IUserService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
+    <list default="true" id="623bfcfc-deb5-48a0-89fa-5939a0338613" name="Changes" comment="Update User service">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/sergeikonash/user_service/controllers/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/sergeikonash/user_service/controllers/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/sergeikonash/user_service/controllers/advices/GlobalHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/sergeikonash/user_service/dao/api/IUserDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/sergeikonash/user_service/dao/api/IUserDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/sergeikonash/user_service/dao/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/sergeikonash/user_service/dao/entity/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/sergeikonash/user_service/dto/PageDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/sergeikonash/user_service/dto/PageDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/sergeikonash/user_service/dto/UserCreateDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/sergeikonash/user_service/dto/UserCreateDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/sergeikonash/user_service/dto/page_converter/PageToMyPageConverter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/sergeikonash/user_service/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/sergeikonash/user_service/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/sergeikonash/user_service/service/api/IUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/sergeikonash/user_service/service/api/IUserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,23 +43,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/HP/IdeaProjects/user-service&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;spring.configuration.checksum&quot;: &quot;442cf4015509eda9c03e5ca3aceef752&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/HP/IdeaProjects/user-service",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "spring.configuration.checksum": "442cf4015509eda9c03e5ca3aceef752"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
+    ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\HP\IdeaProjects\user-service\src\main\java\app\sergeikonash\user_service\controllers" />
@@ -120,7 +112,27 @@
       <workItem from="1657889001212" duration="86000" />
       <workItem from="1657889274363" duration="441000" />
       <workItem from="1657890828446" duration="509000" />
+      <workItem from="1657893039607" duration="580000" />
+      <workItem from="1657898955577" duration="81000" />
+      <workItem from="1658129397071" duration="7067000" />
+      <workItem from="1658148347412" duration="3108000" />
+      <workItem from="1658227570979" duration="2336000" />
     </task>
+    <task id="LOCAL-00001" summary="Update User service">
+      <created>1657893095182</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1657893095182</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Update User service">
+      <created>1657893106009</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1657893106009</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -136,5 +148,19 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Update User service" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update User service" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="org.hibernate.exception.SQLGrammarException" package="org.hibernate.exception" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

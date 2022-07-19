@@ -13,6 +13,9 @@ public class PageDto<T> {
     private boolean last;
     private List<T> content;
 
+    public PageDto() {
+    }
+
     public PageDto(int page,
                    int size,
                    int totalPages,

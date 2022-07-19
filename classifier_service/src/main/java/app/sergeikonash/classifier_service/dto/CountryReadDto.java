@@ -11,6 +11,9 @@ public class CountryReadDto {
     private LocalDateTime dtCreate;
     private LocalDateTime dtUpdate;
 
+    public CountryReadDto() {
+    }
+
     public CountryReadDto(UUID uuid, String title, String description, LocalDateTime dtCreate, LocalDateTime dtUpdate) {
         this.uuid = uuid;
         this.title = title;

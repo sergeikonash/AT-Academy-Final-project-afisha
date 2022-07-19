@@ -1,72 +1,42 @@
-package app.sergeikonash.events_service.dao.entity;
+package app.sergeikonash.events_service.dto;
 
-import javax.persistence.*;
-import java.io.Serializable;
+import app.sergeikonash.events_service.dto.enums.Status;
+import app.sergeikonash.events_service.dto.enums.Type;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Entity
-@Table(name = "films", schema = "afisha_schema")
-public class Film implements Serializable{
+public class FilmReadDto {
 
-    @Id
-    @Column(name = "uuid", nullable = false, updatable = false)
     private UUID uuid;
-
-    @Column(name = "title", nullable = false)
     private String title;
-
-    @Column(name = "description")
     private String description;
-
-    @Column(name = "dt_event")
     private long dt_event;
-
-    @Column(name = "dt_end_of_sale")
     private long dt_end_of_sale;
-
-    @Column(name = "type")
-    private String type;
-
-    @Column(name = "status")
-    private String status;
-
-    @Column(name = "country")
-    private UUID country;
-
-    @Column(name = "release_year")
+    private Type type;
+    private Status status;
     private int release_year;
-
-    @Column(name = "release_date")
     private LocalDate release_date;
-
-    @Column(name = "duration")
     private int duration;
-
-    @Column(name = "date_create")
     private LocalDateTime dtCreate;
-
-    @Column(name = "date_update")
-    @Version
     private LocalDateTime dtUpdate;
 
-    public Film() {
+    public FilmReadDto() {
     }
 
-    public Film(UUID uuid,
-                String title,
-                String description,
-                long dt_event,
-                long dt_end_of_sale,
-                String type,
-                String status,
-                UUID country,
-                int release_year,
-                LocalDate release_date,
-                int duration,
-                LocalDateTime dtCreate,
-                LocalDateTime dtUpdate) {
+    public FilmReadDto(UUID uuid,
+                       String title,
+                       String description,
+                       long dt_event,
+                       long dt_end_of_sale,
+                       Type type,
+                       Status status,
+                       int release_year,
+                       LocalDate release_date,
+                       int duration,
+                       LocalDateTime dtCreate,
+                       LocalDateTime dtUpdate) {
         this.uuid = uuid;
         this.title = title;
         this.description = description;
@@ -74,7 +44,6 @@ public class Film implements Serializable{
         this.dt_end_of_sale = dt_end_of_sale;
         this.type = type;
         this.status = status;
-        this.country = country;
         this.release_year = release_year;
         this.release_date = release_date;
         this.duration = duration;
@@ -86,7 +55,7 @@ public class Film implements Serializable{
         return uuid;
     }
 
-    public void setUuid(UUID id) {
+    public void setUuid(UUID uuid) {
         this.uuid = uuid;
     }
 
@@ -122,28 +91,20 @@ public class Film implements Serializable{
         this.dt_end_of_sale = dt_end_of_sale;
     }
 
-    public String getType() {
+    public Type getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(Type type) {
         this.type = type;
     }
 
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         this.status = status;
-    }
-
-    public UUID getCountry() {
-        return country;
-    }
-
-    public void setCountry(UUID country) {
-        this.country = country;
     }
 
     public int getRelease_year() {

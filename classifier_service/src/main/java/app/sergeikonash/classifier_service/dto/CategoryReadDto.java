@@ -10,6 +10,9 @@ public class CategoryReadDto {
     private LocalDateTime dtCreate;
     private LocalDateTime dtUpdate;
 
+    public CategoryReadDto() {
+    }
+
     public CategoryReadDto(UUID uuid, String title, LocalDateTime dtCreate, LocalDateTime dtUpdate) {
         this.uuid = uuid;
         this.title = title;

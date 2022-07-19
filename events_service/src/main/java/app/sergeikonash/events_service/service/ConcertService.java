@@ -2,84 +2,99 @@ package app.sergeikonash.events_service.service;
 
 import app.sergeikonash.events_service.dao.api.IConcertDao;
 import app.sergeikonash.events_service.dao.entity.Concert;
-import app.sergeikonash.events_service.dto.ConcertDto;
+import app.sergeikonash.events_service.dto.ConcertCreateDto;
+import app.sergeikonash.events_service.dto.ConcertReadDto;
+import app.sergeikonash.events_service.dto.PageDto;
+import app.sergeikonash.events_service.service.api.IConcertService;
 import app.sergeikonash.events_service.service.api.IEventService;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.OptimisticLockException;
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
-public class ConcertService implements IEventService<Concert, ConcertDto> {
+public class ConcertService implements IConcertService {
 
     private final IConcertDao concertDao;
+    private final ModelMapper mapper;
 
-    public ConcertService(IConcertDao concertDao) {
+    @Autowired
+    public ConcertService(IConcertDao concertDao, ModelMapper mapper) {
         this.concertDao = concertDao;
+        this.mapper = mapper;
     }
 
     @Override
-    public Concert createEvent(ConcertDto concertDto) {
+    public ConcertCreateDto createEvent(ConcertCreateDto concertCreateDto) {
 
-        if (concertDto.getTitle() == null || concertDto.getType() == null) {
-            throw new IllegalArgumentException("This field cannot be empty");
+        if (concertCreateDto.getTitle() == null || concertCreateDto.getType() == null) {
+            throw new IllegalArgumentException("Это поле не может быть пустым");
         }
 
-        Concert concert = new Concert();
-        concert.setTitle(concertDto.getTitle());
-        concert.setDescription(concertDto.getDescription());
-        concert.setDt_event(concertDto.getDt_event());
-        concert.setDt_end_of_sale(concertDto.getDt_end_of_sale());
-        concert.setType(concertDto.getType());
-        concert.setStatus(concertDto.getStatus());
-        concert.setCategory(concertDto.getCategory());
+        Concert concert = mapper.map(concertCreateDto, Concert.class);
+        concert.setUuid(UUID.randomUUID());
         concert.setDtCreate(LocalDateTime.now());
-        concert.setDtUpdate(LocalDateTime.now());
-        return this.concertDao.save(concert);
+        concert.setDtUpdate(concert.getDtCreate());
+        this.concertDao.save(concert);
+        return concertCreateDto;
     }
 
     @Override
-    public Concert findByUuid(UUID uuid) {
+    public ConcertReadDto findByUuid(UUID uuid) {
         if (uuid == null) {
             throw new IllegalArgumentException("Это поле не может быть пустым");
         }
 
-        return this.concertDao
-                .findById(uuid)
-                .orElseThrow(() -> {
-                    throw new IllegalArgumentException("Не нашли такого события");
+        Concert concert = concertDao.findById(uuid).
+                orElseThrow(()-> {
+                    throw new IllegalArgumentException("Нет такого концерта");
                 });
+        return mapper.map(concert, ConcertReadDto.class);
     }
 
     @Override
-    public Concert editByUuid(ConcertDto toEdit, UUID uuid, LocalDateTime dtUpdate) {
-        if (uuid == null) {
-            throw new IllegalArgumentException("Это поле не может быть пустым");
-        }
+    public ConcertCreateDto editByUuid(ConcertCreateDto toEdit, UUID uuid, Long dtUpdate) {
+        LocalDateTime dateUpdate = LocalDateTime.ofInstant(Instant.ofEpochMilli(dtUpdate), ZoneId.systemDefault());
+        Concert concert = concertDao.findById(uuid).orElseThrow(()-> {
+            throw new IllegalArgumentException("Нет такого концерта");
+        });
 
-        Concert concert = this.findByUuid(uuid);
-
-        if(concert.getDtUpdate().equals(dtUpdate)){
-            throw new IllegalArgumentException("Событие уже было обновлено кем-то ранее");
-        }
-
+        if (concert.getDtUpdate().equals(dateUpdate)) {
         concert.setTitle(toEdit.getTitle());
         concert.setDescription(toEdit.getDescription());
         concert.setDt_event(toEdit.getDt_event());
         concert.setDt_end_of_sale(toEdit.getDt_end_of_sale());
         concert.setType(toEdit.getType());
         concert.setStatus(toEdit.getStatus());
-        concert.setCategory(toEdit.getCategory());
         concert.setDtUpdate(LocalDateTime.now());
         this.concertDao.save(concert);
-
-        return this.findByUuid(uuid);
+        } else {
+            throw new OptimisticLockException("Событие уже было обновлено");
+        }
+        return toEdit;
     }
 
     @Override
-    public Page<Concert> findPageOfEvents(Pageable pageable) {
-        return this.concertDao.findAll(pageable);
+    public PageDto<ConcertReadDto> getAll(int page, int size) {
+        List<Concert> listEntity = concertDao.findAll();
+        List<ConcertReadDto> listDto = listEntity.stream()
+                .map(element -> mapper.map(element, ConcertReadDto.class))
+                .collect(Collectors.toList());
+        Pageable paging = PageRequest.of(--page,size);
+        Page<Concert> pagedResult = concertDao.findAll(paging);
+        Page<ConcertReadDto> pageConcert = new PageImpl<>(listDto, paging, pagedResult.getTotalElements());
+        PageDto<ConcertReadDto> pageDto = mapper.map(pageConcert, PageDto.class);
+        return pageDto;
     }
 }

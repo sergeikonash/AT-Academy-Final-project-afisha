@@ -7,8 +7,8 @@
   <groupId>app.sergeikonash.classifier_service</groupId>
   <artifactId>classifier_service</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <url>app.sergeikonash.classifier_service</url>
   <name>classifier_service Maven Webapp</name>
+  <url>app.sergeikonash.classifier_service</url>
 
   <properties>
     <maven.compiler.source>11</maven.compiler.source>

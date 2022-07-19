@@ -1,16 +1,13 @@
 package app.sergeikonash.user_service.controllers;
 
-import app.sergeikonash.user_service.dao.entity.User;
 import app.sergeikonash.user_service.dto.PageDto;
 import app.sergeikonash.user_service.dto.UserCreateDto;
+import app.sergeikonash.user_service.dto.UserReadDto;
 import app.sergeikonash.user_service.service.api.IUserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.TimeZone;
 import java.util.UUID;
 
@@ -29,19 +26,20 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserCreateDto> create(@RequestBody UserCreateDto dto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(dto));
+    public ResponseEntity<UserCreateDto> create(@RequestBody UserCreateDto userCreateDto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(userCreateDto));
     }
 
-    @GetMapping("/{id}")
-    public User get(@PathVariable UUID uuid){
-        return this.userService.getUser(uuid);
+    @GetMapping("/{uuid}")
+    public ResponseEntity<UserReadDto> get(@PathVariable UUID uuid){
+        return ResponseEntity.ok(userService.getUser(uuid));
     }
 
     @PutMapping("/{uuid}/dt_update/{dt_update}")
-    public User edit(@PathVariable UUID uuid, @PathVariable Long version, @RequestBody UserCreateDto dto){
-        LocalDateTime lastKnowDtUpdate = LocalDateTime.ofInstant(Instant.ofEpochMilli(version), ZoneId.systemDefault());
-        return this.userService.editUser(dto, uuid, lastKnowDtUpdate);
+    public ResponseEntity<UserCreateDto> edit(@RequestBody UserCreateDto userCreateDto,
+                                              @PathVariable UUID uuid,
+                                              @PathVariable(name = "dt_update") Long dtUpdate) {
+        return ResponseEntity.ok(userService.editUser(userCreateDto, uuid, dtUpdate));
     }
 
     @GetMapping

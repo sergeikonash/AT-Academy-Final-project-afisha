@@ -1,10 +1,9 @@
 package app.sergeikonash.events_service.controller;
 
-import app.sergeikonash.events_service.dao.entity.Film;
-import app.sergeikonash.events_service.dto.FilmDto;
-import app.sergeikonash.events_service.dto.enums.Type;
-import app.sergeikonash.events_service.service.FilmService;
-import org.springframework.beans.factory.annotation.Autowired;
+import app.sergeikonash.events_service.dto.FilmCreateDto;
+import app.sergeikonash.events_service.dto.FilmReadDto;
+import app.sergeikonash.events_service.dto.PageDto;
+import app.sergeikonash.events_service.service.api.IFilmService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,38 +19,32 @@ public class FilmController {
         TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
     }
 
-    private final FilmService filmService;
+    private final IFilmService filmService;
 
-    @Autowired
-    public FilmController(FilmService filmService) {
+    public FilmController(IFilmService filmService) {
         this.filmService = filmService;
     }
 
-    @PostMapping("/{type}")
-    public ResponseEntity<Film> createEvent(@RequestBody FilmDto dto, @PathVariable Type type){
-        if (!type.equals(dto.getType())) {
-            throw new IllegalArgumentException("Неверный тип");
-        }
-        return new ResponseEntity<>(this.filmService.createEvent(dto), HttpStatus.CREATED);
+    @PostMapping
+    public ResponseEntity<FilmCreateDto> createEvent(@RequestBody FilmCreateDto filmCreateDto){
+        return ResponseEntity.status(HttpStatus.CREATED).body(filmService.createEvent(filmCreateDto));
     }
 
-    @GetMapping(value = "/{type}/{uuid}")
-    public Film getEventByUuid(@RequestParam UUID uuid) {
-        return this.filmService.findByUuid(uuid);
+    @GetMapping(value = "/{uuid}")
+    public ResponseEntity<FilmReadDto> getEventByUuid(@PathVariable UUID uuid) {
+        return ResponseEntity.ok(filmService.findByUuid(uuid));
     }
 
-    @PutMapping("/{type}/{uuid}/dt_update/{dt_update}")
-    public Film editEvent(@RequestBody FilmDto dto,
-                          @PathVariable Type type,
+    @PutMapping("/{uuid}/dt_update/{dt_update}")
+    public ResponseEntity<FilmCreateDto> editEvent(@RequestBody FilmCreateDto filmCreateDto,
                           @PathVariable UUID uuid,
-                          @PathVariable ("dt_update")Long dtUpdate){
-        return null;
+                          @PathVariable ("dt_update") Long dtUpdate){
+        return ResponseEntity.ok(filmService.editByUuid(filmCreateDto, uuid, dtUpdate));
     }
 
-    @GetMapping("/{type}")
-    public ResponseEntity<Film> getPageOfEvents(@PathVariable Type type,
-                                                @RequestParam(value = "page", defaultValue = "1") Integer page,
-                                                @RequestParam(value = "size", defaultValue = "20") Integer size) {
-        return null;
+    @GetMapping
+    public ResponseEntity<PageDto> getPageOfEvents(@RequestParam(value = "page", defaultValue = "1") Integer page,
+                                                   @RequestParam(value = "size", defaultValue = "20") Integer size) {
+        return ResponseEntity.ok(filmService.getAll(page, size));
     }
 }

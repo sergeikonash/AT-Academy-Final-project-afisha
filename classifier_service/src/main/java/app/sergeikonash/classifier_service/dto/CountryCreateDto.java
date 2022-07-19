@@ -4,25 +4,15 @@ import java.util.UUID;
 
 public class CountryCreateDto {
 
-    private UUID uuid;
     private String title;
     private String description;
 
     public CountryCreateDto() {
     }
 
-    public CountryCreateDto(UUID uuid, String title, String description) {
-        this.uuid = uuid;
+    public CountryCreateDto(String title, String description) {
         this.title = title;
         this.description = description;
-    }
-
-    public UUID getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(UUID uuid) {
-        this.uuid = uuid;
     }
 
     public String getTitle() {

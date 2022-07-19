@@ -14,7 +14,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.OptimisticLockException;
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -35,7 +38,7 @@ public class UserService implements IUserService {
     public UserCreateDto createUser(UserCreateDto userCreateDto) {
 
         if (userCreateDto.getMail() == null || userCreateDto.getNick() == null) {
-            throw new IllegalArgumentException("This field cannot be empty");
+            throw new IllegalArgumentException("This field can not be empty");
         }
 
         User user = mapper.map(userCreateDto, User.class);
@@ -53,28 +56,23 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public User editUser(UserCreateDto userCreateDto, UUID uuid, LocalDateTime dtUpdate) {
+    public UserCreateDto editUser(UserCreateDto userCreateDto, UUID uuid, Long dtUpdate) {
 
-        if (uuid == null) {
-            throw new IllegalArgumentException("This field cannot be null");
+        LocalDateTime dateUpdate = LocalDateTime.ofInstant(Instant.ofEpochMilli(dtUpdate), ZoneId.systemDefault());
+        User user = userDao.findById(uuid).orElseThrow(()-> {
+            throw new IllegalArgumentException("Нет такого пользователя");
+        });
+        if (user.getDtUpdate().equals(dateUpdate)) {
+            user.setDtUpdate(LocalDateTime.now());
+            user.setMail(userCreateDto.getMail());
+            user.setNick(userCreateDto.getNick());
+            user.setRole(userCreateDto.getRole());
+            user.setStatus(userCreateDto.getStatus());
+            this.userDao.save(user);
+        } else {
+            throw new OptimisticLockException("Entity already updated");
         }
-
-        User user = this.getUser(uuid);
-
-        if(!user.getDtUpdate().equals(dtUpdate)){
-            throw new IllegalArgumentException("Информация о пользователе уже была обновлена кем-то ранее");
-        }
-
-        user.setDtUpdate(LocalDateTime.now());
-        user.setMail(userCreateDto.getMail());
-        user.setNick(userCreateDto.getNick());
-        user.setRole(userCreateDto.getRole());
-        user.setStatus(userCreateDto.getStatus());
-        user.setPassword(userCreateDto.getPassword());
-
-        this.userDao.save(user);
-
-        return this.getUser(uuid);
+        return userCreateDto;
     }
 
     @Override
@@ -91,15 +89,15 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public User getUser(UUID uuid) {
+    public UserReadDto getUser(UUID uuid) {
         if (uuid == null) {
             throw new IllegalArgumentException("This field cannot be null");
         }
 
-        return this.userDao
-                .findById(uuid)
-                .orElseThrow(() -> {
-                    throw new IllegalArgumentException("Не нашли такого пользователя");
+        User user = userDao.findById(uuid).
+                orElseThrow(()-> {
+                    throw new IllegalArgumentException("Нет такого пользователя");
                 });
+        return mapper.map(user, UserReadDto.class);
     }
 }

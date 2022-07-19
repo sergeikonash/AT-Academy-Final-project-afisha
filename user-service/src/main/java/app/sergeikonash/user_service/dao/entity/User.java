@@ -1,18 +1,14 @@
 package app.sergeikonash.user_service.dao.entity;
 
-import app.sergeikonash.user_service.controllers.json.LocalDateTimeDeserializer;
-import app.sergeikonash.user_service.controllers.json.LocalDateTimeSerializer;
 import app.sergeikonash.user_service.dto.enums.Role;
 import app.sergeikonash.user_service.dto.enums.Status;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name = "users", schema = "user")
+@Table(name = "users", schema = "afisha_schema")
 public class User {
 
     @Id
@@ -20,14 +16,10 @@ public class User {
     private UUID uuid;
 
     @Column(name = "date_create")
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime dtCreate;
 
     @Column(name = "date_update")
     @Version
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime dtUpdate;
 
     @Column(name = "mail", nullable = false)
@@ -37,9 +29,11 @@ public class User {
     private String nick;
 
     @Column(name = "role", nullable = false)
+    @Enumerated(EnumType.STRING)
     private Role role;
 
     @Column(name = "status", nullable = false)
+    @Enumerated(EnumType.STRING)
     private Status status;
 
     @Column(name = "password", nullable = false)

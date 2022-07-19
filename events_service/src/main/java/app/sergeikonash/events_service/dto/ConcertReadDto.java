@@ -1,58 +1,35 @@
-package app.sergeikonash.events_service.dao.entity;
+package app.sergeikonash.events_service.dto;
 
-import javax.persistence.*;
+import app.sergeikonash.events_service.dto.enums.Status;
+import app.sergeikonash.events_service.dto.enums.Type;
+
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Entity
-@Table(name = "concerts", schema = "afisha_schema")
-public class Concert {
+public class ConcertReadDto {
 
-    @Id
-    @Column(name = "uuid", nullable = false, updatable = false)
     private UUID uuid;
-
-    @Column(name = "title", nullable = false)
-    String title;
-
-    @Column(name = "description")
-    String description;
-
-    @Column(name = "dt_event")
-    long dt_event;
-
-    @Column(name = "dt_end_of_sale")
-    long dt_end_of_sale;
-
-    @Column(name = "type")
-    String type;
-
-    @Column(name = "status")
-    String status;
-
-    @Column(name = "category")
-    UUID category;
-
-    @Column(name = "date_create")
+    private String title;
+    private String description;
+    private long dt_event;
+    private long dt_end_of_sale;
+    private Type type;
+    private Status status;
     private LocalDateTime dtCreate;
-
-    @Column(name = "date_update")
-    @Version
     private LocalDateTime dtUpdate;
 
-    public Concert() {
+    public ConcertReadDto() {
     }
 
-    public Concert(UUID uuid,
-                   String title,
-                   String description,
-                   long dt_event,
-                   long dt_end_of_sale,
-                   String type,
-                   String status,
-                   UUID category,
-                   LocalDateTime dtCreate,
-                   LocalDateTime dtUpdate) {
+    public ConcertReadDto(UUID uuid,
+                          String title,
+                          String description,
+                          long dt_event,
+                          long dt_end_of_sale,
+                          Type type,
+                          Status status,
+                          LocalDateTime dtCreate,
+                          LocalDateTime dtUpdate) {
         this.uuid = uuid;
         this.title = title;
         this.description = description;
@@ -60,7 +37,6 @@ public class Concert {
         this.dt_end_of_sale = dt_end_of_sale;
         this.type = type;
         this.status = status;
-        this.category = category;
         this.dtCreate = dtCreate;
         this.dtUpdate = dtUpdate;
     }
@@ -69,8 +45,8 @@ public class Concert {
         return uuid;
     }
 
-    public void setUuid(UUID id) {
-        this.uuid = id;
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
     }
 
     public String getTitle() {
@@ -105,28 +81,20 @@ public class Concert {
         this.dt_end_of_sale = dt_end_of_sale;
     }
 
-    public String getType() {
+    public Type getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(Type type) {
         this.type = type;
     }
 
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         this.status = status;
-    }
-
-    public UUID getCategory() {
-        return category;
-    }
-
-    public void setCategory(UUID category) {
-        this.category = category;
     }
 
     public LocalDateTime getDtCreate() {

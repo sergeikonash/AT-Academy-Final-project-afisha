@@ -5,7 +5,7 @@ import app.sergeikonash.classifier_service.dao.entity.Category;
 import app.sergeikonash.classifier_service.dto.CategoryCreateDto;
 import app.sergeikonash.classifier_service.dto.CategoryReadDto;
 import app.sergeikonash.classifier_service.dto.PageDto;
-import app.sergeikonash.classifier_service.service.api.IService;
+import app.sergeikonash.classifier_service.service.api.ICategoryService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,7 +20,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-public class CategoryService implements IService<CategoryCreateDto, Category, CategoryReadDto> {
+public class CategoryService implements ICategoryService {
 
     private ICategoryDao categoryDao;
     private ModelMapper mapper;
